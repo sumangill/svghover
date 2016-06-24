@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>svg example
+</title>
+<style>
+div{cursor:pointer;}
+.svg:hover path{fill:#0089f7}
+
+.categoryNav .catNvChild:hover .foriconSvg .svg line {
+    stroke: #f36f21;
+}
+
+
+</style>
+</head>
+
+<body>
+<div>
+<img class="svg" src="img/liftoff.svg">
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+jQuery('img.svg').each(function(){
+    var $img = jQuery(this);
+    var imgID = $img.attr('id');
+    var imgClass = $img.attr('class');
+    var imgURL = $img.attr('src');
+                jQuery.get(imgURL, function(data) {
+        var $svg = jQuery(data).find('svg');
+        if(typeof imgID !== 'undefined') {
+            $svg = $svg.attr('id', imgID);
+        }
+        if(typeof imgClass !== 'undefined') {
+            $svg = $svg.attr('class', imgClass+' replaced-svg');
+        }
+        $svg = $svg.removeAttr('xmlns:a');
+        if(!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
+            $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
+        }
+        $img.replaceWith($svg);
+
+    }, 'xml');
+
+});
+})
+
+</script>
+</body>
+</html>
